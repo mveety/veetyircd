@@ -1,0 +1,4 @@
+-sname veetyircd
+-setcookie veetyircd
+-kernel logger_level notice
+

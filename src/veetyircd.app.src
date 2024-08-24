@@ -1,0 +1,66 @@
+{application, veetyircd,
+ [ {description, "ircd for my mates written in erlang"}
+ , {vsn, git}
+ , {modules, []}
+ , {registered, [veetyircd_sup, channel_server, user_server, conn_server,
+                 auth_server, name_server]}
+ , {applications, [kernel, stdlib, sasl, crypto, ssl, inets,
+                   mnesia, broadcast]}
+ , {env, [ {start, true} %% whether veetyircd:start() should actually start veetyircd
+         , {net, enabled} %% should we actually listen?
+         , {net_ipaddr, {0,0,0,0}}
+         , {net_port, 6667}
+         , {net_tls_enable, false} %% do note: tls is new and not well tested
+         , {net_tls_port, 6697}
+         , {net_tls_cacerts, "cacerts.pem"}
+         , {net_tls_certfile, "cert.pem"}
+         , {net_tls_keyfile, "key.pem"}
+         , {net_unhandled_msg, log} %% can be crash, log, {log, Level}, silent
+         , {name_server, enabled} %% uses mnesia. can be disabled, enabled, experimental
+         , {name_unhandled_msg, log} %% can be crash, log, {log, Level}, silent
+         , {name_cache, list} %% per-process name cache either disabled, map or list
+         , {name_cache_max, 25} %% only for list cache
+         , {name_cleanup_wait, 750} %% how long to wait for nodedown cleanups to happen (in ms)
+         , {name_exp_resync_time, 120} %% exp server resync time. in seconds
+         , {name_exp_seed_nodes, [test@silverfox, test@thefoundry]} %% seed nodes to connect to on start
+         , {chan_create_missing, true} %% create missing channels when join happens
+         , {chan_allow_permanent, true}
+         , {chan_load_permanent, true} %% load permanent channels on start-up
+         , {chan_take_back_permanent, true} %% take back existing permachans on startup
+         , {chan_database_backend, mnesia} %% can be dets or mnesia
+         , {chan_database, "channels.dets"} %% for dets backend
+         , {chan_send_join_names, true} %% send 353 on JOIN?
+         , {chan_unhandled_msg, log} %% can be crash, log, {log, Level}, silent
+         , {chan_gc_empty_channels, true} %% remove empty temp channels
+         , {chan_broadcast_workers, 1} %% how many workers should broadcast use
+         , {chan_concurrent_dist, true} %% spawn a proc per node for channel move operations
+         , {chan_balance_cluster, true} %% balance temp channel creation across all nodes
+         , {auth, enabled}
+         , {auth_server, mnesia} %% dets or mnesia server, disabled prevents either from starting
+         , {auth_policy, verify} %% can be open, verify, closed
+         , {auth_hashinfo, {sha3_512, 10}} %% {hash to use, n times}
+         , {auth_database, "auth_database.dets"} %% used for old auth_server
+         , {auth_failure, log} %% can be crash, log, {log, Level}, silent. can be state wrapped
+         , {auth_unhandled_msg, log} %% can be crash, log, {log, Level}, silent
+         , {user_error_spurious_modes, false} %% return an error for a mode we don't understand
+         , {user_coding_failure, log} %% can be crash, log, {log, Level}, silent
+         , {user_unhandled_msg, log} %% can be crash, log, {log, Level}, silent
+         , {user_bullshit_node, false} %% return From's node instead of To's
+         , {user_names_show_ops, true} %% prefix the little @ sign in front of names
+         , {user_welcome_message, none} %% binary string. printed in the welcome message
+         , {user_print_login_motd, true} %% whether to send the MOTD at log in
+         , {user_timezone, utc} %% what should TIME return. can be either utc or local
+         , {user_uptime, cluster} %% return node or cluster uptimes
+         , {user_kick_old_session, false} %% disconnect existing user on client connect
+         , {data_store_motd, true} %% whether to load the MOTD
+         , {data_motd_file, "README"} %% MOTD file to load.
+         , {data_unhandled_msg, log} %% can be crash, log, {log, Level}, silent
+         , {irc_coding_stacktrace, silent} %% a more verbose user_coding_failure. sometimes useful.
+         , {bots, enabled} %% should the bot supervisor start?
+         , {bots_authserv, enabled} %% should the authserv bot run
+         , {bots_authserv_allow_registrations, false} %% should authserv's register work
+         , {bots_echobot, enabled} %% should echobot start up?
+         , {bots_opserv, enabled} %% should opserv start up?
+         ]}
+ , {mod, {veetyircd, []}}
+ ]}.

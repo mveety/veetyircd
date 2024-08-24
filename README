@@ -1,0 +1,32 @@
+veetyircd -- ircd written for me and my mates
+
+Building:
+	dev build:
+		rebar3 compile
+	dev release:
+		rebar3 release
+	production build:
+		rebar3 as prod compile
+	production release:
+		rebar3 as prod release
+
+
+	This is the IRC server some mates, mates of mates, etc used to talk to
+each other, hang out, etc. Work started in 2008 or so and ran until 2015
+or so. This release is just the guts of the IRC server. We added many more
+features and services over the years (which you can see the vestiges of in
+places) which are not included, and the server itsself has had some
+major changes since birth.
+	This release is an update of 0.4.2 which adds the mnesia auth_server,
+starts using rebar3 for building/deployment/etc, and removed all of the
+hacks and servers to make the dets auth_server "work" over multiple nodes
+plus some bug fixes. This release is more or less functionally identical
+with 0.4.2, though. In general, I never really removed major features
+(like the dets backends) and generally I kept them up to date, but they
+are untested and may not work. TLS, as well, is a mostly untested feature.
+We connected to these machines exclusively through a vpn so while it was
+added, it was never really used.
+
+	The server only implements a subset of irc which we deemed good enough
+for our uses and completely ignores the server to server parts of the
+protocol because it just didn't make sense for us.
