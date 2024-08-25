@@ -92,6 +92,7 @@ loop(Pinfo, start, _) ->
                      , cc_ref => CCRef
                      , user_modes => #{}
                      , retries => 0
+                     , client_node => none
                      },
             Pid ! {ok, Ref, self()},
             loop(Pinfo, conn_start0, State);
@@ -133,9 +134,10 @@ loop(Pinfo, conn_start1, State0 = #{nick := Nick, cc_ref := CCRef, connpid := Co
     receive
         {nick, Nick} ->
             loop(Pinfo, conn_start1, State0#{nick => Nick});
-        {user, Username, _Mode, none, Realname} ->
+        {user, Username, _Mode, ClientNode, Realname} ->
             State = State0#{user => Username,
-                            realname => Realname},
+                            realname => Realname,
+                            client_node => ClientNode},
             loop(Pinfo, auth, State);
         {pass, Password} ->
             loop(Pinfo, conn_start0, State0#{password => Password});

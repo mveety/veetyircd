@@ -114,7 +114,7 @@ msg(<<"NICK">>, Tail) ->
 msg(<<"USER">>, Tail) ->
     [User, R0] = string:split(Tail, " ", leading),
     [Mode, R1] = string:split(R0, " ", leading),
-    [_Unused, R2] = string:split(R1, " ", leading),
+    [ClientNode, R2] = string:split(R1, " ", leading),
     %% Possible change to allow faster and looser clients
     %% Realname = case R2 of
     %%                <<":",Rn/binary>> -> Rn;
@@ -122,7 +122,7 @@ msg(<<"USER">>, Tail) ->
     %%                _ -> none
     %%            end,
     <<":",Realname/binary>> = R2,
-    {user, User, Mode, none, Realname};
+    {user, User, Mode, ClientNode, Realname};
 
 msg(<<"JOIN">>, Tail) ->
     [Chanstr0|_] = string:split(Tail, " ", leading),
