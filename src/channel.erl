@@ -8,11 +8,7 @@
          do_takeover/2, takeover/1, rejoin_takeover/2, topic/1,
          nusers/1]).
 -include_lib("stdlib/include/ms_transform.hrl").
--record(user, {
-               name, %% user's nick
-               ref,  %% user's process monitor reference
-               pid   %% user's process pid
-              }).
+-include("records.hrl").
 
 sendpartmsg(#{broadcast := Broadcast, name := Name}, UserRec, PartMsg) ->
     Msg = {chanpart, {user, UserRec#user.name, UserRec#user.pid}, {channel, Name, self()}, PartMsg},

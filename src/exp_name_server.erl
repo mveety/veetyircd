@@ -4,7 +4,7 @@
 -export([delete_by_node/1, crash_me/0]).
 %% these are only available with this name_server
 -export([nodes/1, delete_by_ref/2]).
--record(objectinfo, {name, node, pid, ref, aux = none}).
+-include("records.hrl").
 
 do_register(Table, Node, Ref, {Type, Name, Pid}) ->
     Objectinfo = #objectinfo{ name = {Type, Name}

@@ -2,16 +2,7 @@
 -behaviour(gen_server).
 -export([init/1, handle_call/3, handle_cast/2, handle_info/2, code_change/3,
          terminate/2, start_link/0]).
--record(account, { name      %% account username
-                 , pass      %% account password
-                 , salt      %% salt for the password
-                 , hash      %% algorithm used to hash the password
-                 , group     %% user's group
-                 , enabled   %% is the account enabled
-                 , flags     %% global account flags
-                 , chanflags %% channel specific flags
-                 , aux       %% for any extras in the future
-                 }).
+-include("records.hrl").
 
 check_password(Username, Password) ->
     case mnesia:read({account, Username}) of

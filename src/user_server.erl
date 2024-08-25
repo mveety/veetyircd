@@ -4,7 +4,7 @@
          terminate/2, start_link/0]).
 -export([create/0, register/2, unregister/1, lookup/1, get_all/0,
          worker_code_change/0, quit_all/0]).
--record(user, {name, ref, pid}).
+-include("records.hrl").
 
 lookup_user_ref(Ref, Users) ->
     Pred = fun

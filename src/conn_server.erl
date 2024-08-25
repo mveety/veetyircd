@@ -6,13 +6,7 @@
 %% module functions
 -export([allow_conns/1]).
 -include_lib("stdlib/include/ms_transform.hrl").
--record(conn, { ref
-              , sock
-              , pid
-              , status
-              , type
-              , userproc
-              }).
+-include("records.hrl").
 
 accepter(Listen, Parent, Type) ->
     {ok, Accept} = gen_tcp:accept(Listen),

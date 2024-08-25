@@ -13,9 +13,7 @@
 %% reason
 -export([put_nodedata/2, get_nodedata/1, put_data/2, get_data/1,
          put_missing_data/2]).
--record(channel, {name, topic, ref, pid, flags}).
--record(permachan, {name, topic, node, aux = none}).
--record(nodeinfo, {name, node, value}).
+-include("records.hrl").
 
 make_nodedata(Name, Value) ->
     #nodeinfo{ name = Name,

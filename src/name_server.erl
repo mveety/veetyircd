@@ -2,8 +2,7 @@
 -export([init/1, handle_call/3, handle_cast/2, handle_info/2, code_change/3,
          terminate/2, start_link/0]).
 -export([delete_by_node/1, crash_me/0]).
--record(userinfo, {name, node, pid, ref, aux = none}).
--record(chaninfo, {name, node, pid, ref, aux = none}).
+-include("records.hrl").
 
 do_register({user, Name, Pid}) ->
     Userinfo = #userinfo { name = Name
