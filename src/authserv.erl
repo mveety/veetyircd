@@ -13,12 +13,12 @@ parse_message(Msg, _From, self, _State) ->
             {ok, {help, main}};
         [<<"register">>,Rest] ->
             case string:split(Rest, " ", leading) of
-                [Password] -> {ok, {register, Password}};
+                [Password] -> {ok, {register, string:trim(Password, both)}};
                 _ -> {ok, {error, Msg}}
             end;
         [<<"password">>,Rest] ->
             case string:split(Rest, " ", leading) of
-                [Password] -> {ok, {password, Password}};
+                [Password] -> {ok, {password, string:trim(Password, both)}};
                 _ -> {ok, {error, Msg}}
             end;
         [<<"info">>,Rest] ->
